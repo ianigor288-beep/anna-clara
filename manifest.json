@@ -1,0 +1,20 @@
+{
+  "name": "Anna Clara — Rotina, Cuidado e Fé",
+  "short_name": "Anna Clara",
+  "description": "Aplicativo pessoal para organização escolar, hábitos, diário, humor e fé.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf8fc",
+  "theme_color": "#73549a",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

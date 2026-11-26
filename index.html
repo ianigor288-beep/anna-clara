@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#73549a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="Espaço pessoal da Anna Clara para rotina escolar, tarefas, hábitos, humor, diário e fé.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Anna Clara</title>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93L12 12l-.75-2.07A4.002 4.002 0 0 1 12 2z"/>
+            <path d="M22 12a4 4 0 0 1-4 4c-1.95 0-3.58-1.4-3.93-3.25L12 12l2.07-.75A4.002 4.002 0 0 1 22 12z"/>
+            <path d="M12 22a4 4 0 0 1-4-4c0-1.95 1.4-3.58 3.25-3.93L12 12l.75 2.07A4.002 4.002 0 0 1 12 22z"/>
+            <path d="M2 12a4 4 0 0 1 4-4c1.95 0 3.58 1.4 3.93 3.25L12 12l-2.07.75A4.002 4.002 0 0 1 2 12z"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div>
+          <span class="eyebrow" id="offlineBadge">MODO OFFLINE ATIVO</span>
+          <strong>Anna Clara</strong>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-button" id="installBtn" hidden aria-label="Instalar aplicativo" title="Instalar no celular">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="icon-button" id="themeToggle" aria-label="Alternar tema claro e escuro" title="Alternar tema">
+          <svg id="themeIcon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- TELA 1: INÍCIO -->
+      <section class="screen active" id="home" aria-label="Início">
+        <div class="greeting">
+          <p class="eyebrow" id="todayLabel">HOJE</p>
+          <h1 id="greetingHeading">Olá, Anna Clara<span class="period">.</span></h1>
+          <p class="muted" id="greetingSub">Um passo de cada vez. Você não precisa fazer tudo hoje.</p>
+        </div>
+
+        <!-- Versículo do dia -->
+        <article class="verse-card">
+          <div class="card-kicker"><span>✦</span> VERSÍCULO DO DIA</div>
+          <p class="verse-text" id="verseText">“Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará.”</p>
+          <div class="verse-footer">
+            <span id="verseRef">Salmos 37:5</span>
+            <button class="text-button" id="newVerse" type="button">Trocar versículo ↻</button>
+          </div>
+        </article>
+
+        <!-- Resumo da Rotina Escolar de Hoje -->
+        <article class="panel today-routine-card" id="homeRoutineSummary">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow" id="homeScheduleBadge">ROTINA DE HOJE</p>
+              <h3 id="homeScheduleTitle">Carregando rotina...</h3>
+            </div>
+            <button class="chip-button" data-go="routine" type="button">Ver horários</button>
+          </div>
+          <p class="muted compact" id="homeScheduleDesc"></p>
+          <div class="next-activity-box" id="homeNextActivity"></div>
+        </article>
+
+        <!-- Progresso das Tarefas & Hábitos -->
+        <article class="panel progress-card">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">SEU ANDAMENTO</p>
+              <h3>Progresso de hoje</h3>
+            </div>
+            <span class="progress-badge" id="homeProgressPercent">0%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="homeProgressBarWrap">
+            <div class="progress-fill" id="homeProgressBar" style="width: 0%"></div>
+          </div>
+          <div class="progress-stats">
+            <span id="homeTaskCount">0 de 0 tarefas</span>
+            <span id="homeHabitCount">0 de 0 hábitos</span>
+          </div>
+        </article>
+
+        <!-- Atalhos Rápidos -->
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ATALHOS RÁPIDOS</p>
+            <h2>O que você precisa agora?</h2>
+          </div>
+        </div>
+        <div class="quick-grid">
+          <button class="quick-card" data-go="tasks" type="button">
+            <span class="quick-icon lilac">✓</span>
+            <strong>Tarefas</strong>
+            <small id="taskSummary">Organizar prioridades</small>
+          </button>
+          <button class="quick-card" data-go="routine" type="button">
+            <span class="quick-icon peach">◷</span>
+            <strong>Rotina & Hábitos</strong>
+            <small>Grade e check-in diário</small>
+          </button>
+          <button class="quick-card" data-go="care" type="button">
+            <span class="quick-icon sage">♡</span>
+            <strong>Cuidado & Humor</strong>
+            <small>Respiração e registro</small>
+          </button>
+          <button class="quick-card" data-go="faith" type="button">
+            <span class="quick-icon lilac">✦</span>
+            <strong>Fé & Orações</strong>
+            <small>Devocional e pedidos</small>
+          </button>
+          <button class="quick-card" data-go="journal" type="button">
+            <span class="quick-icon sand">✎</span>
+            <strong>Meu Diário</strong>
+            <small>Escrever e reler</small>
+          </button>
+          <button class="quick-card" data-go="settings" type="button">
+            <span class="quick-icon slate">⚙</span>
+            <strong>Backup & Alertas</strong>
+            <small>Salvar dados e avisos</small>
+          </button>
+        </div>
+      </section>
+
+      <!-- TELA 2: TAREFAS -->
+      <section class="screen" id="tasks" aria-label="Tarefas">
+        <div class="page-heading">
+          <p class="eyebrow">ORGANIZAÇÃO</p>
+          <h1>Minhas tarefas</h1>
+          <p class="muted">Adicione, edite ou conclua no seu ritmo. Sem culpa se algo ficar para amanhã.</p>
+        </div>
+
+        <form class="add-form" id="taskForm">
+          <input id="taskInput" maxlength="100" placeholder="Nova tarefa (ex: Revisar biologia)" aria-label="Nova tarefa" required>
+          <select id="taskTag" aria-label="Categoria da tarefa">
+            <option value="Escola">Escola</option>
+            <option value="Pessoal">Pessoal</option>
+            <option value="Casa">Casa</option>
+            <option value="Fé">Fé</option>
+          </select>
+          <button class="primary-button" type="submit">Criar</button>
+        </form>
+
+        <div class="filter-row" role="tablist">
+          <button class="filter active" data-filter="all" type="button">Todas</button>
+          <button class="filter" data-filter="open" type="button">Pendentes</button>
+          <button class="filter" data-filter="done" type="button">Concluídas</button>
+        </div>
+
+        <div id="taskList" class="task-list"></div>
+      </section>
+
+      <!-- TELA 3: ROTINA E HÁBITOS -->
+      <section class="screen" id="routine" aria-label="Rotina e Hábitos">
+        <div class="page-heading">
+          <p class="eyebrow">PLANEJAMENTO SEMANAL</p>
+          <h1>Rotina & Hábitos</h1>
+          <p class="muted">Adaptada aos seus horários escolares, priorizando descanso nos dias integrais.</p>
+        </div>
+
+        <!-- Seletor de Dia da Semana -->
+        <div class="week-strip" id="weekSelector" role="tablist" aria-label="Dias da semana">
+          <button type="button" class="day-pill" data-day="1">Seg</button>
+          <button type="button" class="day-pill" data-day="2">Ter</button>
+          <button type="button" class="day-pill" data-day="3">Qua</button>
+          <button type="button" class="day-pill" data-day="4">Qui</button>
+          <button type="button" class="day-pill" data-day="5">Sex</button>
+          <button type="button" class="day-pill" data-day="6">Sáb</button>
+          <button type="button" class="day-pill" data-day="0">Dom</button>
+        </div>
+
+        <!-- Card da Rotina do Dia Selecionado -->
+        <article class="panel school-panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow" id="routineDayTypeBadge">DIA INTEGRAL</p>
+              <h3 id="routineDayHeading">Segunda-feira</h3>
+            </div>
+            <span class="badge-pill" id="routineSchoolHours">06:50 – 18:40</span>
+          </div>
+          <p class="muted compact" id="routineDayNote"></p>
+
+          <div class="schedule-list" id="scheduleList"></div>
+
+          <!-- Adicionar bloco personalizado na rotina daquele tipo de dia -->
+          <form id="customRoutineForm" class="inline-form" style="margin-top:16px">
+            <input type="time" id="routineBlockTime" aria-label="Horário do bloco" required>
+            <input type="text" id="routineBlockTitle" maxlength="60" placeholder="Adicionar atividade extra..." aria-label="Atividade" required>
+            <button class="round-add" type="submit" aria-label="Adicionar horário">+</button>
+          </form>
+        </article>
+
+        <!-- Hábitos Diários -->
+        <article class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">CONSTÂNCIA LEVE</p>
+              <h3>Meus hábitos</h3>
+            </div>
+            <span class="inline-status" id="habitProgressLabel" style="margin:0">0/0 hoje</span>
+          </div>
+          <p class="muted compact">Toque para marcar hoje, ou use o lápis para editar o nome.</p>
+          <div id="habitList" class="habit-list"></div>
+          <form id="habitForm" class="inline-form">
+            <input id="habitInput" maxlength="60" placeholder="Novo hábito (ex: Beber 2L de água)" aria-label="Novo hábito">
+            <button class="round-add" type="submit" aria-label="Adicionar hábito">+</button>
+          </form>
+        </article>
+      </section>
+
+      <!-- TELA 4: CUIDADO, RESPIRAÇÃO E HUMOR -->
+      <section class="screen" id="care" aria-label="Cuidado e Humor">
+        <div class="page-heading">
+          <p class="eyebrow">AUTOCUIDADO</p>
+          <h1>Um tempo para mim</h1>
+          <p class="muted">Respire fundo e registre como você está se sentindo hoje.</p>
+        </div>
+
+        <!-- Exercício de Respiração com Temporizador -->
+        <article class="breath-card">
+          <p class="eyebrow">EXERCÍCIO GUIADO (4-4-4)</p>
+          <div class="breath-orb" id="breathOrb">
+            <div class="breath-inner">
+              <span id="breathWord">Pronta</span>
+              <small id="breathTimerDisplay">01:00</small>
+            </div>
+          </div>
+          <p class="muted" id="breathHint">Inspire por 4s, segure por 4s e expire suavemente por 4s.</p>
+          <div class="breath-controls">
+            <select id="breathDuration" aria-label="Duração da respiração">
+              <option value="60">1 minuto</option>
+              <option value="120">2 minutos</option>
+              <option value="180">3 minutos</option>
+            </select>
+            <button class="primary-button" id="breathButton" type="button">Iniciar pausa</button>
+          </div>
+        </article>
+
+        <!-- Registro de Humor -->
+        <article class="panel">
+          <h3>Como estou me sentindo agora?</h3>
+          <p class="muted compact">Escolha seu humor e, se quiser, deixe uma nota rápida.</p>
+          <div class="mood-grid" id="moodGrid">
+            <button type="button" data-mood="Tranquila" data-emoji="☀️">☀️<span>Tranquila</span></button>
+            <button type="button" data-mood="Feliz" data-emoji="🌷">🌷<span>Feliz</span></button>
+            <button type="button" data-mood="Grata" data-emoji="✨">✨<span>Grata</span></button>
+            <button type="button" data-mood="Cansada" data-emoji="🌙">🌙<span>Cansada</span></button>
+            <button type="button" data-mood="Ansiosa" data-emoji="🌧️">🌧️<span>Ansiosa</span></button>
+            <button type="button" data-mood="Sobrecarregada" data-emoji="☁️">☁️<span>Sobrecarregada</span></button>
+          </div>
+          <div class="inline-form" style="margin-top:12px">
+            <input id="moodNoteInput" maxlength="90" placeholder="Motivo opcional (ex: Dia cheio na escola)">
+            <button class="secondary-button" id="saveMoodBtn" type="button">Registrar</button>
+          </div>
+          <p class="inline-status" id="moodStatus">Selecione um humor acima para registrar no histórico.</p>
+        </article>
+
+        <!-- Histórico de Humor -->
+        <article class="panel">
+          <div class="panel-title">
+            <h3>Histórico de humor</h3>
+            <button class="text-button" id="clearMoodHistory" type="button">Limpar</button>
+          </div>
+          <div id="moodHistoryList" class="history-list"></div>
+        </article>
+      </section>
+
+      <!-- TELA 5: FÉ E ORAÇÕES -->
+      <section class="screen" id="faith" aria-label="Fé e Orações">
+        <div class="page-heading">
+          <p class="eyebrow">ESPIRITUALIDADE</p>
+          <h1>Minha fé</h1>
+          <p class="muted">Guarde seus pedidos de oração, agradecimentos e versículos favoritos.</p>
+        </div>
+
+        <article class="verse-card faith-verse">
+          <div class="card-kicker"><span>✦</span> PALAVRA PARA MEDITAR</div>
+          <p class="verse-text" id="faithVerseText"></p>
+          <div class="verse-footer">
+            <span id="faithVerseRef"></span>
+            <button class="text-button" id="faithNewVerse" type="button">Próximo versículo ↻</button>
+          </div>
+        </article>
+
+        <article class="panel">
+          <h3 id="prayerFormTitle">Nova anotação de oração</h3>
+          <p class="muted compact">Escreva um pedido, agradecimento ou reflexão com Deus.</p>
+          <input id="prayerTitleInput" maxlength="60" placeholder="Título (ex: Pela semana de provas)" style="width:100%;margin-bottom:8px">
+          <textarea id="prayerInput" rows="4" placeholder="Senhor, hoje eu coloco diante de Ti..."></textarea>
+          <div class="row-actions">
+            <button class="primary-button full" id="savePrayer" type="button">Salvar oração</button>
+            <button class="secondary-button" id="cancelEditPrayer" type="button" hidden>Cancelar</button>
+          </div>
+          <p class="inline-status" id="prayerStatus">Suas orações ficam salvas com segurança no aparelho.</p>
+        </article>
+
+        <div class="section-heading">
+          <h2>Minhas orações salvas</h2>
+        </div>
+        <div id="prayerList" class="journal-entries"></div>
+      </section>
+
+      <!-- TELA 6: DIÁRIO -->
+      <section class="screen" id="journal" aria-label="Diário">
+        <div class="page-heading">
+          <p class="eyebrow">ESPAÇO PESSOAL</p>
+          <h1>Meu diário</h1>
+          <p class="muted">Escreva livremente. Você pode reler, editar ou apagar suas páginas quando quiser.</p>
+        </div>
+
+        <article class="panel">
+          <h3 id="journalFormTitle">Nova página no diário</h3>
+          <input id="journalTitleInput" maxlength="70" placeholder="Título do dia (opcional)" style="width:100%;margin-top:8px">
+          <textarea id="journalInput" rows="6" placeholder="Querido diário, hoje aconteceu..."></textarea>
+          <div class="row-actions">
+            <button class="primary-button full" id="saveJournal" type="button">Guardar página</button>
+            <button class="secondary-button" id="cancelEditJournal" type="button" hidden>Cancelar</button>
+          </div>
+          <p class="inline-status" id="journalStatus">Armazenado localmente neste dispositivo.</p>
+        </article>
+
+        <div class="section-heading">
+          <h2>Páginas anteriores</h2>
+        </div>
+        <div id="journalEntries" class="journal-entries"></div>
+      </section>
+
+      <!-- TELA 7: CONFIGURAÇÕES, LEMBRETES E BACKUP -->
+      <section class="screen" id="settings" aria-label="Configurações e Backup">
+        <div class="page-heading">
+          <p class="eyebrow">AJUSTES E SEGURANÇA</p>
+          <h1>Lembretes & Backup</h1>
+          <p class="muted">Configure seus avisos e proteja todos os seus dados com cópias de segurança.</p>
+        </div>
+
+        <!-- Lembretes e Notificações -->
+        <article class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">NOTIFICAÇÕES</p>
+              <h3>Lembretes diários</h3>
+            </div>
+            <span class="moon">🔔</span>
+          </div>
+          <p class="muted compact">Ative as notificações do navegador para receber lembretes enquanto o app estiver aberto ou em segundo plano no Android.</p>
+          
+          <button class="secondary-button full" id="requestNotifBtn" type="button" style="margin-bottom:14px">Ativar permissão de notificações</button>
+          <p class="inline-status" id="notifPermissionStatus" style="margin-bottom:14px">Status: verificando...</p>
+
+          <div class="setting-row">
+            <div>
+              <strong>Hora de desacelerar (Sono)</strong>
+              <small class="muted" style="display:block;font-size:12px">Aviso noturno para descansar</small>
+            </div>
+            <input type="time" id="sleepTime" value="20:40">
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>Lembrete de retorno da escola</strong>
+              <small class="muted" style="display:block;font-size:12px">18:40 (Seg/Ter/Qui) ou 12:40 (Qua/Sex)</small>
+            </div>
+            <input type="checkbox" id="schoolReminderToggle" class="toggle-check">
+          </div>
+
+          <button class="primary-button full" id="saveReminderSettings" type="button" style="margin-top:12px">Salvar lembretes</button>
+          <button class="text-button" id="testNotifBtn" type="button" style="margin-top:10px;display:block;width:100%;text-align:center">Testar notificação agora</button>
+        </article>
+
+        <!-- Backup e Restauração -->
+        <article class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">SEGURANÇA DOS DADOS</p>
+              <h3>Backup e Restauração</h3>
+            </div>
+            <span class="moon">💾</span>
+          </div>
+          <p class="muted compact">Exporte um arquivo <strong>.json</strong> com todas as suas tarefas, hábitos, diário, humor, orações e rotina para guardar no celular ou Google Drive.</p>
+          
+          <div class="row-actions" style="margin-top:12px">
+            <button class="primary-button full" id="exportBackupBtn" type="button">Exportar Backup (.json)</button>
+          </div>
+
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+            <label for="importBackupInput" style="margin-top:0">Restaurar de um arquivo de backup:</label>
+            <input type="file" id="importBackupInput" accept=".json,application/json" style="width:100%;padding:9px;font-size:12px">
+          </div>
+          <p class="inline-status" id="backupStatus">Nenhuma operação realizada agora.</p>
+        </article>
+      </section>
+    </main>
+
+    <!-- Navegação Inferior -->
+    <nav class="bottom-nav" aria-label="Navegação principal">
+      <button class="nav-item active" data-screen="home" type="button">
+        <span>⌂</span>
+        <small>Início</small>
+      </button>
+      <button class="nav-item" data-screen="tasks" type="button">
+        <span>✓</span>
+        <small>Tarefas</small>
+      </button>
+      <button class="nav-item" data-screen="routine" type="button">
+        <span>◷</span>
+        <small>Rotina</small>
+      </button>
+      <button class="nav-item" data-screen="care" type="button">
+        <span>♡</span>
+        <small>Cuidado</small>
+      </button>
+      <button class="nav-item" data-screen="faith" type="button">
+        <span>✦</span>
+        <small>Fé</small>
+      </button>
+      <button class="nav-item" data-screen="journal" type="button">
+        <span>▤</span>
+        <small>Diário</small>
+      </button>
+      <button class="nav-item" data-screen="settings" type="button">
+        <span>⚙</span>
+        <small>Ajustes</small>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Toast de Feedback -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

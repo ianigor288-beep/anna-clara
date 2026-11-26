@@ -1,0 +1,94 @@
+====================================================================
+PROJETO ANNA CLARA 4.0 — MANUAL DE INSTALAÇÃO, USO E LIMITAÇÕES
+====================================================================
+
+1. O QUE É ESTE PROJETO
+-----------------------
+O Anna Clara 4.0 é um Aplicativo Web Progressivo (PWA) completo,
+desenvolvido com HTML5, CSS3 e JavaScript puro (sem dependências
+pesadas), projetado para funcionar como um aplicativo nativo no
+Android e também offline após o primeiro acesso.
+
+IMPORTANTE: Esta entrega contém o código-fonte completo do PWA
+pronto para hospedagem e instalação na tela inicial do Android.
+Não se trata de um arquivo .apk compilado.
+
+
+2. ESTRUTURA DE ARQUIVOS
+------------------------
+- index.html    -> Interface completa com 7 telas e navegação inferior.
+- styles.css    -> Identidade visual lavanda/lilás, tema escuro e responsivo.
+- app.js        -> Lógica de rotina escolar, CRUD, temporizador, backup e PWA.
+- sw.js         -> Service Worker para funcionamento 100% offline.
+- manifest.json -> Manifesto para instalação na tela inicial do Android.
+- icon.svg      -> Ícone vetorial adaptável (maskable) do aplicativo.
+- LEIA-ME.txt   -> Este manual de instalação, testes e limitações.
+
+
+3. COMO INSTALAR NO ANDROID (PASSO A PASSO)
+-------------------------------------------
+Para que o Android reconheça o PWA e permita a instalação na tela
+inicial com funcionamento offline, ele precisa ser servido via HTTPS:
+
+Opção A — GitHub Pages (Gratuito e permanente):
+1. Crie uma conta gratuita no GitHub (github.com).
+2. Crie um repositório novo (ex: "anna-clara") e envie os 7 arquivos
+   desta pasta para lá.
+3. Vá em Settings > Pages, selecione a branch "main" e salve.
+4. O GitHub gerará um link HTTPS (ex: https://seuusuario.github.io/anna-clara).
+5. Abra esse link no Google Chrome do celular Android.
+6. Toque no botão de download na barra superior do app OU no menu (⋮)
+   do Chrome > "Instalar aplicativo" / "Adicionar à tela inicial".
+
+Opção B — Netlify Drop (Mais rápido, sem precisar de conta):
+1. Acesse app.netlify.com/drop pelo computador.
+2. Arraste a pasta "anna_clara_v4" para a página.
+3. Abra o link HTTPS gerado no Chrome do Android e instale.
+
+Como testar localmente no computador:
+1. Abra o terminal na pasta do projeto.
+2. Execute: python -m http.server 8000
+3. Acesse: http://localhost:8000
+
+
+4. FUNCIONALIDADES IMPLEMENTADAS E VALIDADAS
+--------------------------------------------
+- Tela Inicial: Saudação por período do dia, data atual, versículo
+  diário, resumo dinâmico da rotina escolar de hoje, barra de
+  progresso (tarefas + hábitos) e atalhos rápidos.
+- Rotina Escolar Inteligente:
+  * Segunda, Terça e Quinta: saída às 06:50 e retorno às 18:40
+    (blocos focados em recuperação e descanso noturno).
+  * Quarta e Sexta: saída às 06:50 e retorno às 12:40 (tarde equilibrada).
+  * Permite adicionar e remover blocos extras na rotina.
+- Tarefas: Criar com categoria, filtrar (Todas/Pendentes/Concluídas),
+  marcar como concluída, editar texto e excluir.
+- Hábitos: Criar, marcar conclusão diária (reinicia automaticamente
+  no dia seguinte), editar e excluir.
+- Cuidado e Respiração: Temporizador guiado 4-4-4 (Inspire, Segure,
+  Expire) com opções de 1, 2 ou 3 minutos + Registro e histórico de
+  humor com observações.
+- Fé e Orações: Troca de versículos + criação, edição, leitura e
+  exclusão de múltiplas anotações de oração.
+- Diário Pessoal: Criação, edição, visualização e exclusão de páginas
+  com data e hora.
+- Backup e Restauração: Exportação de arquivo .json com todos os dados
+  e restauração completa a partir de arquivo salvo.
+
+
+5. LIMITAÇÕES TÉCNICAS EXISTENTES (TRANSPARÊNCIA)
+-------------------------------------------------
+1. Notificações em segundo plano: Por ser um PWA rodando no navegador
+   Android (sem servidor backend/Firebase), os lembretes programados
+   disparam quando o aplicativo está aberto ou em memória recente no
+   navegador. Se o Android encerrar completamente o processo do Chrome,
+   alarmes exatos podem não tocar como um despertador nativo.
+2. Armazenamento Local (localStorage): Os dados ficam salvos apenas no
+   aparelho onde o app foi instalado. Caso os dados do navegador sejam
+   limpos manualmente, o conteúdo será apagado — por isso, utilize a
+   função "Exportar Backup (.json)" na aba Ajustes periodicamente.
+3. Fontes externas: As fontes decorativas (Playfair Display e DM Sans)
+   são carregadas do Google Fonts na primeira abertura online; sem
+   internet antes do cache, o aparelho usa automaticamente as fontes
+   nativas equivalentes sem quebrar o layout.
+====================================================================
